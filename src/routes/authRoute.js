@@ -12,8 +12,8 @@ const router = express.Router();
 router.post("/register", validateRequest(registerSchema), register );
 router.post("/login", validateRequest(loginSchema), login );
 router.post("/logout", logout );
-router.post("/google", googleAuth );
-router.post("/forgot-password", forgotPassword );
-router.post("/reset-password", resetPassword );
+router.post("/google", validateRequest(googleAuthSchema), googleAuth );
+router.post("/forgot-password", validateRequest(forgotPasswordSchema), forgotPassword );
+router.patch("/reset-password/:token", validateRequest(resetPasswordSchema),  resetPassword );
 
 export default router;

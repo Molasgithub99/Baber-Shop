@@ -1,0 +1,39 @@
+<!-- google-test/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Sign-In Test</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body style="font-family: sans-serif; max-width: 600px; margin: 40px auto;">
+  <h2>Google Sign-In Test</h2>
+  <p>Click the button, then copy the token below into Postman.</p>
+
+  <div id="g_id_onload"
+       data-client_id="1072943049124-ug5qecqf8h1tuaknr3ujd6ns73tal9ga.apps.googleusercontent.com"
+       data-callback="handleCredentialResponse">
+  </div>
+  <div class="g_id_signin" data-type="standard"></div>
+
+  <h3>ID Token:</h3>
+  <textarea id="tokenOutput" rows="12" cols="70" readonly style="font-size: 11px;"></textarea>
+  <br />
+  <button onclick="copyToken()">Copy to clipboard</button>
+
+  <script>
+    function handleCredentialResponse(response) {
+      console.log("ID Token:", response.credential);
+      document.getElementById('tokenOutput').value = response.credential;
+    }
+    function copyToken() {
+      const box = document.getElementById('tokenOutput');
+      box.select();
+      document.execCommand('copy');
+      alert('Copied!');
+    }
+  </script>
+</body>
+</html>
+
+// serve the index file on port 5173(for the frontend)
+\Baber-Shop\src\google-test> npx serve -l 5173

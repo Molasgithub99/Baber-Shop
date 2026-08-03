@@ -33,15 +33,18 @@ export const sendResetPasswordEmail = async (user, resetToken) => {
   });
 };
 
-export const sendBookingConfirmationRequestToBarber = async (barberUser, booking) => {
-  const confirmUrl = `${process.env.CLIENT_URL}/barber/bookings/${booking.id}/confirm`;
+export const sendBookingConfirmationRequestToBarber = async (barberUser, booking, rawToken) => {
+  // const confirmUrl = `${process.env.CLIENT_URL}/barber/bookings/${booking.id}/confirm`;
+    const confirmUrl = `${process.env.API_URL}/bookings/confirm/${rawToken}`;
+
   await sendEmail({
     to: barberUser.email,
     subject: 'New booking request',
-    html: `
+     html: `
       <p>Hi ${barberUser.name},</p>
       <p>You have a new booking request for ${new Date(booking.date).toLocaleString()}.</p>
-      <a href="${confirmUrl}">Confirm this booking</a>
+      <a href="${confirmUrl}">Click here to confirm this booking</a>
+      <p>This link expires in 24 hours.</p>
     `,
   });
 };
@@ -52,7 +55,7 @@ export const sendBookingConfirmedToClient = async (clientUser, booking) => {
     subject: 'Your booking is confirmed!',
     html: `
       <p>Hi ${clientUser.name},</p>
-      <p>Your trim on ${new Date(booking.date).toLocaleString()} has been confirmed by your barber.</p>
+      <p>Your trim booking on ${new Date(booking.date).toLocaleString()} has been confirmed by your barber.</p>
     `,
   });
 };

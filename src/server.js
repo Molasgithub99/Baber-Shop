@@ -1,10 +1,17 @@
 import express from 'express';
 import { config } from 'dotenv'; // Import the config function from dotenv
+import cookieParser from 'cookie-parser'; // Import the cookie-parser middleware
+
 import { connectDB, disconnectDB } from './config/db.js'; // Import the connectDB and disconnectDB functions from db.js
 
 
 //Import Routes
 import authRoutes from './routes/authRoute.js';
+import userRoutes from './routes/userRoute.js';
+import bookingRoutes from './routes/bookingRoute.js';
+import barberRoutes from './routes/baberRoute.js';
+import serviceRoutes from './routes/serviceRoute.js';
+
 
 config(); // Load environment variables from .env file
 connectDB(); // Connect to the database
@@ -14,9 +21,14 @@ const app = express(); // initialize express app
 //Body parser middlewares
 app.use(express.json()); // Parse incoming JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
+app.use(cookieParser()); // cookie parser middleware to parse cookies from incoming requests
 
 //API Routes
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/bookings', bookingRoutes);
+app.use('/barbers', barberRoutes);
+app.use('/services', serviceRoutes);
 
 const PORT = 5001;
 const server = app.listen(PORT, () => {
