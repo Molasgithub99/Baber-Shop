@@ -1,4 +1,3 @@
-// src/controllers/userController.js
 import { prisma } from '../config/db.js';
 import bcrypt from 'bcryptjs';
 

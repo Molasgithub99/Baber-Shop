@@ -145,6 +145,7 @@ const cancelBooking = async (req, res) => {
     return res.status(404).json({ error: 'Booking not found' });
   }
 
+  // Check if the user is the owner of the booking or an admin
   const isOwner = booking.clientId === req.user.id;
   const isAdmin = req.user.role === 'ADMIN';
   if (!isOwner && !isAdmin) {

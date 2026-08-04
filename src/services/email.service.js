@@ -59,3 +59,16 @@ export const sendBookingConfirmedToClient = async (clientUser, booking) => {
     `,
   });
 };
+
+export const sendContactNotificationToAdmin = async (contactMessage) => {
+  // For now, sends to whoever EMAIL_FROM/your own inbox is — swap for a real admin email once you have one
+  await sendEmail({
+    to: process.env.ADMIN_EMAIL || process.env.SMTP_USER,
+    subject: `New contact message from ${contactMessage.name}`,
+    html: `
+      <p><strong>From:</strong> ${contactMessage.name} (${contactMessage.email})</p>
+      <p><strong>Message:</strong></p>
+      <p>${contactMessage.message}</p>
+    `,
+  });
+};
